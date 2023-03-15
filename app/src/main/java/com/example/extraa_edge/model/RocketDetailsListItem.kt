@@ -1,5 +1,8 @@
 package com.example.extraa_edge.model
 
+import androidx.room.Entity
+
+@Entity(tableName = "rocket")
 data class RocketDetailsListItem(
     val active: Boolean,
     val boosters: Int,
