@@ -35,15 +35,11 @@ class SingleRocketActivity : AppCompatActivity() {
         binding.successRate.text  = intent.getIntExtra("success",0).toString()
         binding.wiki.text  = intent.getStringExtra("wiki")
 
+
         val images = intent.getStringArrayListExtra("images")!!.toCollection(ArrayList())
         Log.d("singleRocket", images.toString())
 
-//        val imagesArray = images?.split(",")
         Log.d("singleRocket array ", images.toString())
-
-//        val imagelist = arrayListOf(imagesArray)
-//        val listImages = imagelist.toCollection()
-
 
 
         mySingleRocketRecyclerView = findViewById(R.id.singleRocketRV)
