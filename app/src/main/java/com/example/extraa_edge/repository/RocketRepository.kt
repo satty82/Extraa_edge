@@ -40,7 +40,8 @@ class RocketRepository(private val rocketDetailsService: RocketDetailsService, p
         if (result.body() != null) {
 
             rocketLiveDataID.postValue(result.body())
-            rocketDatabase.rocketDao().addRocket(result.body()!!)
+            rocketDatabase.rocketDao().addRocket(result.body())
+
 
             Log.d("getRocket result", "inside ${result.body()}")
 
