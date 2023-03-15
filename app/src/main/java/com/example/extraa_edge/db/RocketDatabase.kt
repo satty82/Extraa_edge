@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.extraa_edge.model.RocketDetailsListItem
 
-@Database(entities = [RocketDetailsListItem::class], version = 1)
+//@Database(entities = [RocketDetailsListItem::class], version = 1)
 abstract class RocketDatabase : RoomDatabase() {
 
     abstract fun rocketDao(): RocketDao

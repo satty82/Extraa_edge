@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.extraa_edge.OnItemClicklistner
 import com.example.extraa_edge.R
-import com.example.extraa_edge.RocketApplication
 import com.example.extraa_edge.adapter.MyRecyclerAdapter
 import com.example.extraa_edge.api.RetrofitHelper
 import com.example.extraa_edge.api.RocketDetailsService
@@ -31,6 +30,8 @@ class MainActivity : AppCompatActivity(), OnItemClicklistner {
     var isEnable = true
 
 
+
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +40,7 @@ class MainActivity : AppCompatActivity(), OnItemClicklistner {
         val rocketDetailsService =
             RetrofitHelper.getInstance().create(RocketDetailsService::class.java)
 
-
-        repository = (application as RocketApplication).rocketRepository
+        repository = RocketRepository(rocketDetailsService)
 
         myRecyclerView = findViewById(R.id.recycler_View)
         myRecyclerView.layoutManager = LinearLayoutManager(this)

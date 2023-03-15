@@ -21,7 +21,8 @@ class RocketApplication : Application() {
 
         val rocketService = RetrofitHelper.getInstance().create(RocketDetailsService::class.java)
         val database = RocketDatabase.getDatabase(applicationContext)
-        rocketRepository = RocketRepository(rocketService, database)
+
+        rocketRepository = RocketRepository(rocketService) // pass database as argument for RoomDB
 
     }
 }

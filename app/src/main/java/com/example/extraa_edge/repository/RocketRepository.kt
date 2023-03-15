@@ -8,7 +8,7 @@ import com.example.extraa_edge.db.RocketDatabase
 import com.example.extraa_edge.model.RocketDetailsList
 import com.example.extraa_edge.model.RocketDetailsListItem
 
-class RocketRepository(private val rocketDetailsService: RocketDetailsService, private val rocketDatabase: RocketDatabase ) {
+class RocketRepository(private val rocketDetailsService: RocketDetailsService) {
 
     private val rocketLiveData = MutableLiveData<RocketDetailsList>()
     private val rocketLiveDataID = MutableLiveData<RocketDetailsListItem>()
@@ -40,7 +40,9 @@ class RocketRepository(private val rocketDetailsService: RocketDetailsService, p
         if (result.body() != null) {
 
             rocketLiveDataID.postValue(result.body())
-            rocketDatabase.rocketDao().addRocket(result.body())
+
+            //Saving in Room Database
+//            rocketDatabase.rocketDao().addRocket(result.body())
 
 
             Log.d("getRocket result", "inside ${result.body()}")
