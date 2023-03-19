@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
+import android.widget.EditText
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +21,10 @@ import com.example.extraa_edge.model.RocketDetailsListItem
 import com.example.extraa_edge.repository.RocketRepository
 import com.example.extraa_edge.viewmodels.MainViewModel
 import com.example.extraa_edge.viewmodels.MainViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), OnItemClicklistner {
 
@@ -27,21 +34,25 @@ class MainActivity : AppCompatActivity(), OnItemClicklistner {
     lateinit var myRecyclerView: RecyclerView
     lateinit var adapter : MyRecyclerAdapter
     lateinit var repository : RocketRepository
+    lateinit var textView : EditText
     var isEnable = true
+    var bundle = Bundle()
+
+    var name:String? = null
+    var age = 34
 
 
-
-
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         val rocketDetailsService =
             RetrofitHelper.getInstance().create(RocketDetailsService::class.java)
 
         repository = RocketRepository(rocketDetailsService)
 
+        textView = findViewById(R.id.text)
         myRecyclerView = findViewById(R.id.recycler_View)
         myRecyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -50,9 +61,21 @@ class MainActivity : AppCompatActivity(), OnItemClicklistner {
         mainViewModel =
             ViewModelProvider(this, MainViewModelFactory(repository,"0")).get(MainViewModel::class.java)
 
+        if (savedInstanceState!= null) {
+            textView.setText(savedInstanceState.getString("saveIt"))
+            Log.d("mainActivity saved", savedInstanceState.getString("saveIt").toString())
+        }
+
+
+        savedInstanceState?.let {
+
+        }
+
 
         mainViewModel.rocket.observe(this) {
             Log.d("SATTY", it.toString())
+
+            it.let {  }
 
             adapter = MyRecyclerAdapter(it)
             myRecyclerView.adapter = adapter
@@ -60,6 +83,50 @@ class MainActivity : AppCompatActivity(), OnItemClicklistner {
             adapter.update(this@MainActivity)
 
         }
+
+        name!!.let{
+
+              Log.d("mainActivity let", it)
+
+        }
+
+//        name!!.let{
+//            Log.d("mainActivity ", it)
+//        }
+
+        val lambda1 = {x:Int, y:Int -> x+y}
+        val line = {
+            val a = 23
+            a
+            "Satyam"
+        }
+
+        val coroutine = CoroutineScope(Dispatchers.Main)
+        val job1 = coroutine.launch {
+            println("loadingg..")
+            delay(3000)
+
+        }
+        val job2 = CoroutineScope(Dispatchers.IO)
+
+
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+
+        Log.d("mainActivity onRestate", savedInstanceState?.getString("saveIt").toString())
+
+        textView.setText(savedInstanceState?.getString("saveIt"))
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString("saveIt",textView.text.toString())
+        Log.d("mainActivity onSavState"," called")
 
     }
 
@@ -99,5 +166,27 @@ class MainActivity : AppCompatActivity(), OnItemClicklistner {
 
     }
 
+    override fun onStop() {
+        super.onStop()
+
+         bundle.putString("saveIt",textView.text.toString())
+
+        onSaveInstanceState(bundle)
+
+        name ?: return
+
+
+//        bundle?.putString("saveIt",textView.text.toString())
+//        Log.d("mainActivity ","onStop called")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        Log.d("mainActivity ","onDestroy called")
+
+
+    }
 
 }

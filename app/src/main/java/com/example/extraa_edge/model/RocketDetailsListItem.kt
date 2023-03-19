@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "rocket")
 data class RocketDetailsListItem(
     @PrimaryKey(autoGenerate = true)
-    val rocketId : Int,
+    val rocketId : Int?,
     val active: Boolean,
     val boosters: Int,
     val company: String,

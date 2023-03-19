@@ -52,4 +52,20 @@ class RocketRepository(private val rocketDetailsService: RocketDetailsService) {
     }
 
 
+    suspend fun getRocketDetailsBackground(id:String){
+
+        val result = rocketDetailsService.getRocketDetailsonID(id)
+
+        result.body()?.let {
+
+            Log.d("Repo RD ",it.toString())
+
+            // this block not run for null values
+
+
+        }
+    }
+
+
+
 }
